@@ -67,38 +67,6 @@ namespace ChatterBox.Background.Call
             set { _statsConfig = value; }
         }
 
-        public IAsyncOperation<DtoMediaDevices> GetAudioCaptureDevicesAsync()
-        {
-            RtcManager.Instance.EnsureRtcIsInitialized();
-            var media = RtcManager.Instance.Media;
-            var settings = ApplicationData.Current.LocalSettings;
-            var audioCaptureDevices = media.GetAudioCaptureDevices().ToArray().ToDto();
-            DtoMediaDevice preferredAudioCapture = null;
-            // Search for previously selected audio capture device and mark as preferred if found.
-            // Otherwise fall back to default device.
-            if (settings.Values.ContainsKey(MediaSettingsIds.AudioDeviceSettings))
-            {
-                var selectedAudioCaptureDevice = Array.Find(
-                    audioCaptureDevices.Devices,
-                    it => it.Id == (string) settings.Values[MediaSettingsIds.AudioDeviceSettings]);
-                if (selectedAudioCaptureDevice != null)
-                {
-                    // Previously selected audio recording device found, mark as preferred.
-                    selectedAudioCaptureDevice.IsPreferred = true;
-                    preferredAudioCapture = selectedAudioCaptureDevice;
-                }
-            }
-            if (preferredAudioCapture == null)
-            {
-                // Previously selected audio recording device is not found anymore,
-                // probably removed.
-                // Erase user preferrence and select default device.
-                _audioDevice = null;
-                ApplicationData.Current.LocalSettings.Values.Remove(MediaSettingsIds.AudioDeviceSettings);
-            }
-            return Task.FromResult(audioCaptureDevices).AsAsyncOperation();
-        }
-
         public IAsyncOperation<DtoCodecInfo> GetAudioCodecAsync()
         {
             return Task.FromResult(_audioCodec).AsAsyncOperation();
@@ -119,42 +87,7 @@ namespace ChatterBox.Background.Call
         {
             return Task.FromResult(_audioPlayoutDevice).AsAsyncOperation();
         }
-
-        public IAsyncOperation<DtoMediaDevices> GetAudioPlayoutDevicesAsync()
-        {
-            RtcManager.Instance.EnsureRtcIsInitialized();
-            var media = RtcManager.Instance.Media;
-            var settings = ApplicationData.Current.LocalSettings;
-            var audioPlayoutDevices = media.GetAudioPlayoutDevices().ToArray().ToDto();
-            DtoMediaDevice preferredAudioPlayoutDevice = null;
-            // Search for previously selected audio playout device and mark as preferred if found.
-            // Otherwise fall back to default device.
-            if (settings.Values.ContainsKey(MediaSettingsIds.AudioPlayoutDeviceSettings))
-            {
-                var selectedAudioPlayoutDevice = Array.Find(
-                    audioPlayoutDevices.Devices,
-                    it => it.Id == (string) settings.Values[MediaSettingsIds.AudioPlayoutDeviceSettings]);
-                if (selectedAudioPlayoutDevice != null)
-                {
-                    // Previously selected audio playout device found, mark as preferred.
-                    selectedAudioPlayoutDevice.IsPreferred = true;
-                    preferredAudioPlayoutDevice = selectedAudioPlayoutDevice;
-                }
-            }
-            if (preferredAudioPlayoutDevice == null)
-            {
-                // Previously selected audio playout device is not found anymore,
-                // probably removed.
-                // Erase user preferrence and select default device.
-
-                _audioPlayoutDevice = null;
-                ApplicationData.Current.LocalSettings.Values.Remove(MediaSettingsIds.AudioPlayoutDeviceSettings);
-            }
-
-            return Task.FromResult(audioPlayoutDevices).AsAsyncOperation();
-        }
-
-
+        
         public IAsyncOperation<DtoMediaDevices> GetVideoCaptureDevicesAsync()
         {
             RtcManager.Instance.EnsureRtcIsInitialized();
@@ -233,7 +166,7 @@ namespace ChatterBox.Background.Call
         public IAsyncAction SaveTraceAsync(TraceServerConfig traceServer)
         {
             RtcManager.Instance.EnsureRtcIsInitialized();
-            WebRTC.SaveTrace(traceServer.Ip, traceServer.Port);
+            // WebRTC.SaveTrace(traceServer.Ip, traceServer.Port);
             return Task.CompletedTask.AsAsyncAction();
         }
 
@@ -352,6 +285,7 @@ namespace ChatterBox.Background.Call
                 }
                 WebRTC.SetPreferredVideoCaptureFormat(preferredCaptureWidth, preferredCaptureHeight,
                     preferredCaptureFrameRate);
+                
             }
             else
             {
@@ -364,7 +298,7 @@ namespace ChatterBox.Background.Call
         public IAsyncAction StartTraceAsync()
         {
             RtcManager.Instance.EnsureRtcIsInitialized();
-            WebRTC.StartTracing();
+            // WebRTC.StartTracing();
             AppPerformanceCheck();
             return Task.CompletedTask.AsAsyncAction();
         }

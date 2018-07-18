@@ -92,39 +92,6 @@ namespace ChatterBox.Background.Call
                 Media.SelectVideoDevice(selectedVideoDevice);
             }
 
-            if (settings.Values.ContainsKey(MediaSettingsIds.AudioDeviceSettings))
-            {
-                var audioDeviceId = (string) settings.Values[MediaSettingsIds.AudioDeviceSettings];
-                var audioDevices = Media.GetAudioCaptureDevices();
-                var selectedAudioDevice = audioDevices.FirstOrDefault(d => d.Id.Equals(audioDeviceId));
-                if (selectedAudioDevice == null)
-                {
-                    settings.Values.Remove(MediaSettingsIds.AudioDeviceSettings);
-                }
-                Media.SelectAudioCaptureDevice(selectedAudioDevice);
-            }
-            else
-            {
-                Media.SelectAudioCaptureDevice(null);
-            }
-
-            if (settings.Values.ContainsKey(MediaSettingsIds.AudioPlayoutDeviceSettings))
-            {
-                var audioPlayoutDeviceId = (string) settings.Values[MediaSettingsIds.AudioPlayoutDeviceSettings];
-                var audioPlayoutDevices = Media.GetAudioPlayoutDevices();
-                var selectedAudioPlayoutDevice =
-                    audioPlayoutDevices.FirstOrDefault(d => d.Id.Equals(audioPlayoutDeviceId));
-                if (selectedAudioPlayoutDevice == null)
-                {
-                    settings.Values.Remove(MediaSettingsIds.AudioPlayoutDeviceSettings);
-                }
-                Media.SelectAudioPlayoutDevice(selectedAudioPlayoutDevice);
-            }
-            else
-            {
-                Media.SelectAudioPlayoutDevice(null);
-            }
-
             var videoCodecId = int.MinValue;
             if (settings.Values.ContainsKey(MediaSettingsIds.VideoCodecSettings))
             {

@@ -90,7 +90,7 @@ namespace ChatterBox.Background.Call.States
             if (videoTrackChanged)
             {
                 Context.ResetRemoteRenderer();
-                var source = RtcManager.Instance.Media.CreateMediaSource(newVideoTrack, CallContext.PeerMediaStreamId);
+                var source = RtcManager.Instance.Media.CreateMediaSource(newVideoTrack, "VP8", CallContext.PeerMediaStreamId);
                 Context.RemoteVideoRenderer.SetupRenderer(Context.ForegroundProcessId, source, Context.RemoteVideoControlSize);
             }
             else if (!isHold)
@@ -106,7 +106,7 @@ namespace ChatterBox.Background.Call.States
                 var tracks = Context.LocalStream.GetVideoTracks();
                 if (tracks.Count > 0)
                 {
-                    var source = RtcManager.Instance.Media.CreateMediaSource(tracks[0], CallContext.LocalMediaStreamId);
+                    var source = RtcManager.Instance.Media.CreateMediaSource(tracks[0], "VP8", CallContext.LocalMediaStreamId);
                     Context.LocalVideoRenderer.SetupRenderer(Context.ForegroundProcessId, source, Context.LocalVideoControlSize);
                 }
             }
@@ -138,7 +138,7 @@ namespace ChatterBox.Background.Call.States
             var tracks = stream.GetVideoTracks();
             if (tracks.Count > 0)
             {
-                var source = RtcManager.Instance.Media.CreateMediaSource(tracks[0], CallContext.PeerMediaStreamId);
+                var source = RtcManager.Instance.Media.CreateMediaSource(tracks[0], "VP8", CallContext.PeerMediaStreamId);
                 Context.RemoteVideoRenderer.SetupRenderer(Context.ForegroundProcessId, source, Context.RemoteVideoControlSize);
             }
         }

@@ -16,13 +16,9 @@ namespace ChatterBox.Background.AppService
 {
     public interface IMediaSettingsChannel
     {
-        IAsyncOperation<MediaDevices> GetAudioCaptureDevicesAsync();
-
         IAsyncOperation<CodecInfo> GetAudioCodecAsync();
         IAsyncOperation<CodecInfos> GetAudioCodecsAsync();
         IAsyncOperation<MediaDevice> GetAudioDeviceAsync();
-        IAsyncOperation<MediaDevice> GetAudioPlayoutDeviceAsync();
-        IAsyncOperation<MediaDevices> GetAudioPlayoutDevicesAsync();
         IAsyncOperation<MediaDevices> GetVideoCaptureDevicesAsync();
         IAsyncOperation<CodecInfo> GetVideoCodecAsync();
         IAsyncOperation<CodecInfos> GetVideoCodecsAsync();

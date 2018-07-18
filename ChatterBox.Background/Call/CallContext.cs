@@ -350,11 +350,11 @@ namespace ChatterBox.Background.Call
                 ToastNotificationService.ShowToastNotification("Saving Webrtc trace");
                 var webrtcTraceInternalFile = ApplicationData.Current.LocalFolder.Path + "\\" + "_webrtc_trace.txt";
 
-                WebRTC.SaveTrace(webrtcTraceInternalFile);
+                // WebRTC.SaveTrace(webrtcTraceInternalFile);
 
                 await SaveToUserPickedFolder(webrtcTraceInternalFile);
 
-                WebRTC.StartTracing();
+                // WebRTC.StartTracing();
 
                 ToastNotificationService.ShowToastNotification("Saving Webrtc trace finished!");
             });

@@ -516,8 +516,7 @@ namespace ChatterBox.ViewModels
         /// </summary>
         private async Task<ObservableCollection<MediaDevice>> GetAudioCaptureDevicesAsync()
         {
-            var audioDevices = await _mediaSettings.GetAudioCaptureDevicesAsync();
-            var result = new ObservableCollection<MediaDevice>(audioDevices.Devices);
+            var result = new ObservableCollection<MediaDevice>();
             result.Insert(0, new MediaDevice {Name = "Default", Id = DefaultAudioDeviceId, IsPreferred = false});
             return result;
         }
@@ -527,8 +526,7 @@ namespace ChatterBox.ViewModels
         /// </summary>
         private async Task<ObservableCollection<MediaDevice>> GetAudioPlayoutDevicesAsync()
         {
-            var audioPlayoutDevices = await _mediaSettings.GetAudioPlayoutDevicesAsync();
-            var result = new ObservableCollection<MediaDevice>(audioPlayoutDevices.Devices);
+            var result = new ObservableCollection<MediaDevice>();
             result.Insert(0, new MediaDevice {Name = "Default", Id = DefaultAudioDeviceId, IsPreferred = false});
             return result;
         }
